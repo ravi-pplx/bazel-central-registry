@@ -1,0 +1,82 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("//contrib/bazel:defs.bzl", "GIT_COPTS")
+
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "odb",
+    srcs = [
+        "source.c",
+        "source-files.c",
+        "source-inmemory.c",
+        "source-loose.c",
+        "source-packed.c",
+        "streaming.c",
+        "transaction.c",
+    ],
+    copts = GIT_COPTS,
+    deps = [
+        ":headers",
+        "//:abspath",
+        "//:blob",
+        "//:chdir_notify",
+        "//:config",
+        "//:convert",
+        "//:dir",
+        "//:environment",
+        "//:fsck",
+        "//:gettext",
+        "//:git_compat_util",
+        "//:hex",
+        "//:list_objects_filter_options",
+        "//:lockfile",
+        "//:loose",
+        "//:mergesort",
+        "//:midx",
+        "//:object_file",
+        "//:object_file_convert",
+        "//:odb",
+        "//:oidtree",
+        "//:pack",
+        "//:pack_bitmap",
+        "//:pack_objects",
+        "//:pack_revindex",
+        "//:packfile",
+        "//:path",
+        "//:progress",
+        "//:promisor_remote",
+        "//:repack",
+        "//:replace_object",
+        "//:repository",
+        "//:run_command",
+        "//:strbuf",
+        "//:strvec",
+        "//:tree",
+        "//:write_or_die",
+        "//sha1dc",
+        "//sha256",
+    ],
+)
+
+# Header-only so root libraries whose headers include odb/ headers can depend
+# on them without a cycle through the odb sources.
+cc_library(
+    name = "headers",
+    hdrs = [
+        "source.h",
+        "source-files.h",
+        "source-inmemory.h",
+        "source-loose.h",
+        "source-packed.h",
+        "streaming.h",
+        "transaction.h",
+    ],
+    deps = [
+        "//:gettext",
+        "//:hashmap",
+        "//:object",
+        "//:odb",
+        "//:packfile_list",
+        "//:strmap",
+    ],
+)

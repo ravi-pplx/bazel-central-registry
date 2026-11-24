@@ -1,0 +1,13 @@
+package(default_visibility = ["//visibility:public"])
+
+exports_files(["git-completion.bash"])
+
+filegroup(
+    name = "completion",
+    srcs = [
+        "git-completion.bash",
+        "git-completion.tcsh",
+        "git-completion.zsh",
+        "git-prompt.sh",
+    ],
+)

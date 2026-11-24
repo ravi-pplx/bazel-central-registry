@@ -4,6 +4,20 @@ This is a community-maintained setup to build Git (and libgit) using Bazel.
 
 ## Release notes
 
+### 2.56.1
+
+- Rebased the Bazel integration on top of upstream Git 2.56.1, which includes
+  the 2.55.1 and 2.56.1 security fixes.
+- Wired the new 2.56 sources (`fetch-object-info.c`, `packfile-list.c`,
+  `odb/source-packed.c`) and moved the `odb/` headers into a header-only
+  `//odb:headers` target to avoid a dependency cycle.
+- Enabled PCRE2 (`USE_LIBPCRE2`) on all platforms, so `git grep -P` works.
+- Enabled iconv on Linux, matching upstream's `config.mak.uname`.
+- Exported `builtin.h` and `contrib/completion/git-completion.bash`.
+- Added the new 2.56 tests. `t1017-cat-file-remote-object-info` is excluded
+  because it uses an unquoted redirect that bash rejects when the trash
+  directory path contains spaces.
+
 ### 2.55.0.bcr.1
 
 - Lowered the `rules_rust` floor from 0.71.3 to 0.69.0. `rules_rust` 0.71.1+
